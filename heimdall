@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+# Start Heimdall
+if [ "$1" = "start" ]; then
+
+fi
+
+# Stop Heimdall
+if [ "$1" = "stop" ]; then
+
+fi
