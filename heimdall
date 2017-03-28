@@ -3,10 +3,10 @@
 
 # Start Heimdall
 if [ "$1" = "start" ]; then
-
+    python raspi/start.py
 fi
 
 # Stop Heimdall
 if [ "$1" = "stop" ]; then
-
+    echo "STOP" >> /tmp/heimdall
 fi
