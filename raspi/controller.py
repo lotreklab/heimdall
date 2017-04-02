@@ -41,13 +41,26 @@ class Controller(object):
         while self._running:
             print ("RUN")
             time.sleep(2)
+            if not self.is_enlightening:
+                self.red_light_on()
+                time.sleep(0.2)
+                self.red_light_off()
+
+    @property
+    def is_enlightening(self):
+        return self._light_status
 
     def light_on(self):
         self._light_status = 1
-        self._red_light_status = 0
 
     def light_off(self):
-        self._running = False
+        self._light_status = 0
+
+    def red_light_on(self):
+        self._red_light_status = 1
+
+    def red_light_off(self):
+        self._red_light_status = 0
 
     def stop(self):
         self._running = False
@@ -55,7 +68,11 @@ class Controller(object):
     def execute(self, command):
         if command == COMMAND_LIGTH_ON:
             self.light_on()
+            self.red_light_off()
         elif command == COMMAND_LIGTH_OFF:
             self.light_off()
+            self.red_light_on()
         elif command == COMMAND_STOP:
+            self.light_off()
+            self.red_light_off()
             self.stop()
