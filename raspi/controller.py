@@ -1,13 +1,22 @@
 import os
 import time
 
+import RPi.GPIO as GPIO
+
 from threading import Thread
 
+
+GPIO.setmode(GPIO.BOARD)
 
 COMMAND_LIGTH_ON = 'LIGTH_ON'
 COMMAND_LIGTH_OFF = 'LIGTH_OFF'
 COMMAND_STOP = 'STOP'
 
+LIGHT_CHANNEL = 16
+RED_LIGHT_CHANNEL = 18
+
+GPIO.setup(LIGHT_CHANNEL, GPIO.OUT)
+GPIO.setup(RED_LIGHT_CHANNEL, GPIO.OUT)
 
 pipe_name = '/tmp/heimdall'
 
@@ -45,21 +54,25 @@ class Controller(object):
                 self.red_light_on()
                 time.sleep(0.2)
                 self.red_light_off()
-
+        GPIO.cleanup()
     @property
     def is_enlightening(self):
         return self._light_status
 
     def light_on(self):
+        GPIO.output(LIGHT_CHANNEL, GPIO.HIGH)
         self._light_status = 1
 
     def light_off(self):
+        GPIO.output(LIGHT_CHANNEL, GPIO.LOW)
         self._light_status = 0
 
     def red_light_on(self):
+        GPIO.output(RED_LIGHT_CHANNEL, GPIO.HIGH)
         self._red_light_status = 1
 
     def red_light_off(self):
+        GPIO.output(RED_LIGHT_CHANNEL, GPIO.LOW)
         self._red_light_status = 0
 
     def stop(self):
