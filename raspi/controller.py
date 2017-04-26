@@ -51,7 +51,7 @@ class Controller(object):
 
     def _on_running(self):
         while self._running:
-            time.sleep(2)
+            time.sleep(1)
             if self.is_enlightening:
                 self.red_light_off()
             else:
